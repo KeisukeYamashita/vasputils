@@ -4,3 +4,7 @@
 [![Build Status](https://travis-ci.com/KeisukeYamashita/vasp-utils.svg?branch=master)](https://travis-ci.com/KeisukeYamashita/vasp-utils)
 
 > A useful VASP tools to help your research accelerate
+
+## License
+
+`vasp-utils` is licensed under the MIT license. Please read the LICENSE file in this repository for more information.
