@@ -1,11 +1,16 @@
 extern crate clap;
 
+mod format;
+mod utils;
+
 use clap::{App, Arg, SubCommand};
+
+use format::Formatter;
 
 use std::error::Error;
 use std::fs::File;
 use std::path::Path;
-use std::io::{Write, BufRead, BufReader};
+use std::io::{ BufWriter, Write, BufRead, BufReader };
 
 fn main() {
     let matches = App::new("vasp-utils")
@@ -15,7 +20,9 @@ fn main() {
         .args(&[Arg::with_name("debug")
             .help("turn on debug")
             .short("v")
-            .long("debug")]).subcommand(
+            .long("verbose")]
+        )
+        .subcommand(
             SubCommand::with_name("format")
                 .about("format input file of vasp into specific type of file")
                 .arg(
@@ -31,10 +38,15 @@ fn main() {
                         .short("o")
                         .long("output"),
                 ),
-        ).get_matches();
+        )
+        .get_matches();
 
-    if let Some(matches) = matches.subcommand_matches("format") {
+    if let Some(matches) = matches.subcommand_matches("format") { 
+        // Option .required(true) promises that input has a value
         let input_file_path = matches.value_of("input").unwrap();
+
+        let output_file_path = matches.value_of("output");
+
         let path = Path::new(input_file_path);
         let display = path.display();
 
@@ -51,11 +63,16 @@ fn main() {
           }
         }
 
-        let mut output_file = match File::create("./hoge.txt") {
+        let mut output_file_path = match File::create("./hoge.txt") {
           Err(why) => panic!("couldn`t find : {}", why.description()),
           Ok(file) => file,
         };
 
-        write!(output_file, "heg");
+        let mut output_file = BufWriter::new(output_file_path);
+        
+        let b = b"hoge";
+
+
+        output_file.write(b).unwrap();
     }
 }
