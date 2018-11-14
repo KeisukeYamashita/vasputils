@@ -23,6 +23,7 @@ fn main() {
                         .help("the input file to format")
                         .short("i")
                         .long("input")
+                        .takes_value(true)                  
                         .required(true),
                 ).arg(
                     Arg::with_name("output")
@@ -33,22 +34,19 @@ fn main() {
         ).get_matches();
 
     if let Some(matches) = matches.subcommand_matches("format") {
-        if let Some(i) = matches.value_of("input") {
-            println!("{}", i)
-        }
-        println!("Adding file: {}", matches.value_of("input").unwrap());
-        // let path = Path::new(input_file_path);
-        // let display = path.display();
+        let input_file_path = matches.value_of("input").unwrap();
+        let path = Path::new(input_file_path);
+        let display = path.display();
 
-        // let mut file = match File::open(input_file_path) {
-        //   Err(why) => panic!("couldn`t find {}: {}", display, why.description()),
-        //   Ok(file) => file,
-        // };
+        let mut file = match File::open(input_file_path) {
+          Err(why) => panic!("couldn`t find {}: {}", display, why.description()),
+          Ok(file) => file,
+        };
 
-        // let mut s = String::new();
-        // match file.read_to_string(&mut s) {
-        //   Err(why) => panic!("couldn`t read {}: {}",display, why.description()),
-        //   Ok(_) => println!("{}", s)
-        // };
+        let mut s = String::new();
+        match file.read_to_string(&mut s) {
+          Err(why) => panic!("couldn`t read {}: {}",display, why.description()),
+          Ok(_) => println!("{}", s)
+        };
     }
 }
