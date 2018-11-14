@@ -4,8 +4,8 @@ use clap::{App, Arg, SubCommand};
 
 use std::error::Error;
 use std::fs::File;
-use std::io::prelude::*;
 use std::path::Path;
+use std::io::{Write, BufRead, BufReader};
 
 fn main() {
     let matches = App::new("vasp-utils")
@@ -43,10 +43,19 @@ fn main() {
           Ok(file) => file,
         };
 
-        let mut s = String::new();
-        match file.read_to_string(&mut s) {
-          Err(why) => panic!("couldn`t read {}: {}",display, why.description()),
-          Ok(_) => println!("{}", s)
+        let buffered = BufReader::new(file);
+
+        for line in buffered.lines() {
+          if let Ok(s) = line {
+            println!("{}", s);
+          }
+        }
+
+        let mut output_file = match File::create("./hoge.txt") {
+          Err(why) => panic!("couldn`t find : {}", why.description()),
+          Ok(file) => file,
         };
+
+        write!(output_file, "heg");
     }
 }
