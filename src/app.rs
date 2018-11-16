@@ -42,7 +42,8 @@ fn main() {
         .get_matches();
 
     if let Some(matches) = matches.subcommand_matches("format") { 
-        // Option .required(true) promises that input has a value
+
+        // Option `.required(true)` promises that input has a value
         let input_file_path = matches.value_of("input").unwrap();
 
         let output_file_path = matches.value_of("output");
