@@ -5,6 +5,13 @@
 
 > A useful VASP tools to help your research accelerate
 
+## Support
+ 
+### OUTCAR
+
+- [ ] Get free energy of integration from OUTCAR
+
+
 ## License
 
 `vasp-utils` is licensed under the MIT license. Please read the LICENSE file in this repository for more information.
