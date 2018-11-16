@@ -23,7 +23,6 @@ pub fn get_output_file_name<'a, 'b>(input_path_str: &'a str, output_file_str: Op
 mod test {
     use super::*;
 
-    // TODO: This test should be done
     #[test]
     fn test_get_output_file_name() {
         let input_path = "./this/is/test/input/path/OUTCAR";
