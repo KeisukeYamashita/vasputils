@@ -5,11 +5,8 @@ mod utils;
 
 use clap::{App, Arg, SubCommand};
 
-use format::Formatter;
-
 use std::error::Error;
 use std::fs::File;
-use std::path::Path;
 use std::io::{ BufWriter, Write, BufRead, BufReader };
 
 fn main() {
@@ -44,15 +41,13 @@ fn main() {
     if let Some(matches) = matches.subcommand_matches("format") { 
 
         // Option `.required(true)` promises that input has a value
-        let input_file_path = matches.value_of("input").unwrap();
+        let input_path_str = matches.value_of("input").unwrap();
+        let output_path_str = matches.value_of("output");
 
-        let output_file_path = matches.value_of("output");
+        let (input_path, output_path) = utils::get_output_file_name(input_path_str, output_path_str);
 
-        let path = Path::new(input_file_path);
-        let display = path.display();
-
-        let mut file = match File::open(input_file_path) {
-          Err(why) => panic!("couldn`t find {}: {}", display, why.description()),
+        let mut file = match File::open(input_path) {
+          Err(why) => panic!("couldn`t find :{}", why.description()),
           Ok(file) => file,
         };
 

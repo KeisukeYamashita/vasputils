@@ -9,7 +9,7 @@
  
 ### OUTCAR
 
-- [ ] Get free energy of integration
+- [ ] Get free energy of integration from OUTCAR
 
 
 ## License
