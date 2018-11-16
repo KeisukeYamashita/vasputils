@@ -27,7 +27,7 @@ mod test {
     fn test_get_output_file_name() {
         let input_path = "./this/is/test/input/path/OUTCAR";
         let output_path = None;
-        let (input_file, output_file ) = get_output_file_name(input_path, output_path);
+        let (input_file, output_file ) = get_file_paths(input_path, output_path);
         assert_eq!(input_file, Path::new(input_path));
         assert_eq!(output_file, Path::new("./OUTCAR_o"));
     }
