@@ -59,7 +59,7 @@ fn main() {
           }
         }
 
-        let mut output_file_path = match File::create("./hoge.txt") {
+        let mut output_file_path = match File::create(output_path) {
           Err(why) => panic!("couldn`t find : {}", why.description()),
           Ok(file) => file,
         };

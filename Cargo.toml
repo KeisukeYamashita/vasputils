@@ -1,7 +1,9 @@
 [package]
-name = "vasp-utils"
+name = "vasputils"
 version = "0.1.0"
 authors = ["KeisukeYamashita <19yamashita15@gmail.com>"]
+categories = ["command-line-utilities"]
+homepage = "https://github.com/KeisukeYamashita/vasputils"
 
 [[bin]]
 name = "bin"
