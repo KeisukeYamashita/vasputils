@@ -44,7 +44,7 @@ fn main() {
         let input_path_str = matches.value_of("input").unwrap();
         let output_path_str = matches.value_of("output");
 
-        let (input_path, output_path) = utils::get_output_file_name(input_path_str, output_path_str);
+        let (input_path, output_path) = utils::get_file_paths(input_path_str, output_path_str);
 
         let mut file = match File::open(input_path) {
           Err(why) => panic!("couldn`t find :{}", why.description()),
