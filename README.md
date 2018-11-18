@@ -15,17 +15,14 @@ cargo install KeisukeYamashita/vasputils
 
 ## Support
 
-We use emoji to show supports.
+We use emoji to show supports.
 
-| emoji | meaning |
-|:----:|:----:|
-| ✅ | supported |
-| 🚧 | working |
+-  ✅ : supported
+-  🚧 : working
 
 ### OUTCAR
 
-✅ Just grep
-
+✅ grep
 
 ## License
 
