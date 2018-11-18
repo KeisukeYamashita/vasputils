@@ -14,12 +14,19 @@ cargo install KeisukeYamashita/vasputils
 ```
 
 ## Support
- 
+
+We use emoji to show supports.
+
+| emoji | meaning |
+|:----:|:----:|
+| ✅ | supported |
+| 🚧 | working |
+
 ### OUTCAR
 
-- [ ] Get free energy of integration from OUTCAR
+✅ Just grep
 
 
 ## License
 
-`vasp-utils` is licensed under the MIT license. Please read the LICENSE file in this repository for more information.
+`vasputils` is licensed under the MIT license. Please read the LICENSE file in this repository for more information.
