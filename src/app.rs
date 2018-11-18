@@ -5,9 +5,6 @@ mod utils;
 
 use clap::{App, Arg, SubCommand};
 
-use std::error::Error;
-use std::fs::File;
-use std::io::{ BufWriter, Write, BufRead, BufReader };
 
 fn main() {
     let matches = App::new("vasp-utils")
@@ -29,19 +26,33 @@ fn main() {
                         .long("input")
                         .takes_value(true)                  
                         .required(true),
-                ).arg(
+                )
+                .arg(
                     Arg::with_name("output")
                         .help("specify output file and path")
                         .short("o")
-                        .long("output"),
+                        .long("output")
+                        .takes_value(true),
+                )
+                .arg(
+                    Arg::with_name("type")
+                        .help("type of feature you what to format into")
+                        .short("t")
+                        .long("type")
+                        .possible_values(&["FreeEnegry", "fe"])
+                        .takes_value(true)
+                        .required(true)
                 ),
         )
         .get_matches();
 
     if let Some(matches) = matches.subcommand_matches("format") { 
-        // Option `.required(true)` promises that input has a value
+        // Option `.required(true)` promises that input and type has a value
         let input_path_str = matches.value_of("input").unwrap();
+        let feature_type = matches.value_of("type").unwrap();
+
         let output_path_str = matches.value_of("output");
+
 
         let (input_path, output_path) = utils::get_file_paths(input_path_str, output_path_str);
 
@@ -50,29 +61,6 @@ fn main() {
             output_path,
         );
 
-        let mut file = match File::open(formatter.input) {
-          Err(why) => panic!("couldn`t find :{}", why.description()),
-          Ok(file) => file,
-        };
-
-        let buffered = BufReader::new(file);
-
-        for line in buffered.lines() {
-          if let Ok(s) = line {
-            println!("{}", s);
-          }
-        }
-
-        let mut output_file_path = match File::create(formatter.output) {
-          Err(why) => panic!("couldn`t find : {}", why.description()),
-          Ok(file) => file,
-        };
-
-        let mut output_file = BufWriter::new(output_file_path);
-        
-        let b = b"hoge";
-
-
-        output_file.write(b).unwrap();
+        formatter.extract_feature(feature_type);
     }
 }

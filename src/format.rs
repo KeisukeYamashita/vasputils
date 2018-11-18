@@ -1,4 +1,8 @@
+use std::str::FromStr;
 use std::path::Path;
+use std::fs::File;
+use std::error::Error;
+use std::io::{ BufWriter, Write, BufRead, BufReader };
 
 /// `Formatter` represents broker for user and  this command line interface.
 /// 
@@ -18,6 +22,68 @@ impl<'a> Formatter<'a> {
         Formatter {
             input: input_path,
             output: output_path
+        }
+    }
+
+    /// `extract_feature` creates a new file of extracted infomation from the input file.
+    pub fn extract_feature(&self, what: &str) {
+        let feature_type: Feature = match Feature::from_str(what) {
+            Ok(v) => v,
+            Err(why) => panic!("failed to get type of feature, err: {}", why)
+        };
+
+        Self::exec_extraction(&self, feature_type);
+    }
+
+    /// `exec_extraction` routes the action.
+    fn exec_extraction(&self, feature_type: Feature){
+        let input_file = match File::open(self.input) {
+          Err(why) => panic!("couldn`t find :{}", why.description()),
+          Ok(file) => file,
+        };
+
+        let output_file_path = match File::create(self.output) {
+          Err(why) => panic!("couldn`t find : {}", why.description()),
+          Ok(file) => file,
+        };
+
+        let mut output_file = BufWriter::new(output_file_path);
+
+        let buffered = BufReader::new(input_file);
+
+        for line in buffered.lines() {
+          if let Ok(line) = line {
+            if line.contains("free") {
+                let line_with_new_line = line + "\n";
+                output_file.write(line_with_new_line.as_bytes()).unwrap();
+            }
+          }
+        }
+    }
+
+    /// `is_validate_input` checks wether the input file exists.
+    fn is_validate_input(&self) -> bool {
+        return match File::open(self.input) {
+            Err(_) => false,
+            Ok(_) => true
+        }
+    }
+}
+
+/// `Feature` enum is for types of feature which is used for formatting. 
+pub enum Feature {
+    // FreeEnergy is usally used for checking convergence.
+    FreeEnergy
+}
+
+impl FromStr for Feature {
+    type Err = &'static str;
+
+    /// `from_str` trait converts `&str` into enum field.
+    fn from_str(s: &str) -> Result<Self, Self::Err>{
+        match s {
+            "FreeEnergy" | "fe" => Ok(Feature::FreeEnergy),
+            _ => Err("No feature to match")
         }
     }
 }
