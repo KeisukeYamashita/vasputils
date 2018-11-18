@@ -5,6 +5,13 @@
 
 > A useful VASP tools to help your research accelerate
 
+                            _   _ _
+__   ____ _ ___ _ __  _   _| |_(_) |___
+\ \ / / _` / __| '_ \| | | | __| | / __|
+ \ V / (_| \__ \ |_) | |_| | |_| | \__ \
+  \_/ \__,_|___/ .__/ \__,_|\__|_|_|___/
+               |_|
+
 ## Install
 
 Install this crate by this command.
