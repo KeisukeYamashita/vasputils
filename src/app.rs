@@ -8,7 +8,7 @@ use clap::{App, Arg, SubCommand};
 
 fn main() {
     let matches = App::new("vasp-utils")
-        .version("v1.0.0-beta")
+        .version("v0.1.0-beta")
         .author("KeisukeYamashita <19yamashita15@gmail.com>")
         .about("A useful VASP tools to help your research accelerate")
         .args(&[Arg::with_name("debug")
@@ -47,7 +47,6 @@ fn main() {
         .get_matches();
 
     if let Some(matches) = matches.subcommand_matches("format") { 
-        // Option `.required(true)` promises that input and type has a value
         let input_path_str = matches.value_of("input").unwrap();
         let feature_type = matches.value_of("type").unwrap();
 
