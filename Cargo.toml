@@ -4,6 +4,8 @@ version = "0.1.0"
 authors = ["KeisukeYamashita <19yamashita15@gmail.com>"]
 categories = ["command-line-utilities"]
 homepage = "https://github.com/KeisukeYamashita/vasputils"
+description = "A useful VASP tools to help your research accelerate"
+license = "MIT"
 
 [[bin]]
 name = "bin"
