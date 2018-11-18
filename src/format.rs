@@ -3,11 +3,13 @@ use std::path::Path;
 use std::fs::File;
 use std::error::Error;
 use std::io::{ BufWriter, Write, BufRead, BufReader };
+use std::any::Any;
 
 /// `Formatter` represents broker for user and  this command line interface.
 /// 
 /// This is like a handler, if you are familier with web application. It contains informations such as
 /// `input file`, `output file` and the `action` from the user input.
+#[derive(Copy, Clone)]
 pub struct Formatter<'a> {
     /// `input` represents field for user input file path.
     input: &'a Path,
@@ -36,7 +38,7 @@ impl<'a> Formatter<'a> {
             Err(why) => panic!("failed to get type of feature, err: {}", why)
         };
 
-        Self::exec_extraction(&self, feature_type);
+        self.exec_extraction(feature_type);
     }
 
     /// `exec_extraction` routes the action.
@@ -59,11 +61,42 @@ impl<'a> Formatter<'a> {
         for line in buffered.lines() {
           if let Ok(line) = line {
             if line.contains(grep_text) {
-                let line_with_new_line = line + "\n";
-                output_file.write(line_with_new_line.as_bytes()).unwrap();
+                let line = self.process(line);
+                output_file.write(line.as_bytes()).unwrap();
             }
           }
         }
+    }
+
+    /// `process` actually processes the line from the input.
+    fn process(&self, line: String)-> String {
+        return match self.output_type {
+            "plainText" => self.process_plain_text(line),
+            "csv" => self.process_csv(line),
+            _ => panic!("not match")
+        }
+    }
+
+    /// `process_plain_text` processes greps for plain text.
+    fn process_plain_text(&self, line: String) -> String {
+        let line_with_new_line = line + "\n";
+        return line_with_new_line
+    }
+
+    /// `process_csv` processes grep and converts into csv.
+    fn process_csv(&self, line: String)-> String {
+        let mut result: String = "".to_string();
+        let elements: Vec<&str> = line.split_whitespace().collect();
+        
+        for element in &elements {
+            if *element != " " {
+                if *element == elements[4] {
+                    result = result + *element + "\n";
+                } 
+            }
+        }
+
+        return result
     }
 
     /// `get_grep_text` returns text use for grep. The alternative method from bash is, for example, 
