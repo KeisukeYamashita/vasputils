@@ -10,18 +10,22 @@ use std::io::{ BufWriter, Write, BufRead, BufReader };
 /// `input file`, `output file` and the `action` from the user input.
 pub struct Formatter<'a> {
     /// `input` represents field for user input file path.
-    pub input: &'a Path,
+    input: &'a Path,
 
     // `output` represent field for user output file path.
-    pub output: &'a Path
+    output: &'a Path,
+
+    // `output_type` is the output file format.
+    output_type: &'a str
 }
 
 impl<'a> Formatter<'a> {
     /// `new()` initializes the `Formatter` struct with user input.
-    pub fn new(input_path: &'a Path, output_path: &'a Path) -> Self {
+    pub fn new(input_path: &'a Path, output_path: &'a Path, output_type: &'a str) -> Self {
         Formatter {
             input: input_path,
-            output: output_path
+            output: output_path,
+            output_type: output_type,
         }
     }
 
@@ -48,16 +52,30 @@ impl<'a> Formatter<'a> {
         };
 
         let mut output_file = BufWriter::new(output_file_path);
-
         let buffered = BufReader::new(input_file);
+
+        let grep_text = Self::get_grep_text(feature_type);
 
         for line in buffered.lines() {
           if let Ok(line) = line {
-            if line.contains("free") {
+            if line.contains(grep_text) {
                 let line_with_new_line = line + "\n";
                 output_file.write(line_with_new_line.as_bytes()).unwrap();
             }
           }
+        }
+    }
+
+    /// `get_grep_text` returns text use for grep. The alternative method from bash is, for example, 
+    /// 
+    /// ```shell
+    /// grep "free " OUTCAR > OUTCAR_o
+    /// ```
+    /// 
+    fn get_grep_text<'b>(feature_type: Feature)-> &'b str {
+        // `extract feature` promised that it will match, so there is no default _ in match.
+        return match feature_type {
+            Feature::FreeEnergy => "free"
         }
     }
 

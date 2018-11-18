@@ -42,15 +42,28 @@ fn main() {
                         .possible_values(&["FreeEnegry", "fe"])
                         .takes_value(true)
                         .required(true)
+                )
+                .arg(
+                    Arg::with_name("output type")
+                        .help("specify file format of output. Default is plain text.")
+                        .short("t")
+                        .long("type")
+                        .possible_values(&["plainText", "csv"])
+                        .takes_value(true)
                 ),
         )
         .get_matches();
 
     if let Some(matches) = matches.subcommand_matches("format") { 
         let input_path_str = matches.value_of("input").unwrap();
-        let feature_type = matches.value_of("type").unwrap();
+        let feature_type = matches.value_of("feature").unwrap();
 
         let output_path_str = matches.value_of("output");
+
+        let output_type = match matches.value_of("output type") {
+            Some(output_type) => output_type,
+            None => "plainText"
+        };
 
 
         let (input_path, output_path) = utils::get_file_paths(input_path_str, output_path_str);
@@ -58,6 +71,7 @@ fn main() {
         let formatter = format::Formatter::new(
             input_path, 
             output_path,
+            output_type,
         );
 
         formatter.extract_feature(feature_type);
