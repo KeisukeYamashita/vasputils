@@ -35,10 +35,10 @@ fn main() {
                         .takes_value(true),
                 )
                 .arg(
-                    Arg::with_name("type")
+                    Arg::with_name("feature")
                         .help("type of feature you what to format into")
-                        .short("t")
-                        .long("type")
+                        .short("f")
+                        .long("feature")
                         .possible_values(&["FreeEnegry", "fe"])
                         .takes_value(true)
                         .required(true)
