@@ -2,8 +2,11 @@
 
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 [![Build Status](https://travis-ci.com/KeisukeYamashita/vasp-utils.svg?branch=master)](https://travis-ci.com/KeisukeYamashita/vasp-utils)
+[![Version](https://img.shields.io/badge/version-v0.0.1-red.svg)](https://img.shields.io/badge/version-v0.0.1-red.svg)
 
 > A useful VASP tools to help your research accelerate
+
+```
 
                             _   _ _
 __   ____ _ ___ _ __  _   _| |_(_) |___
@@ -11,6 +14,7 @@ __   ____ _ ___ _ __  _   _| |_(_) |___
  \ V / (_| \__ \ |_) | |_| | |_| | \__ \
   \_/ \__,_|___/ .__/ \__,_|\__|_|_|___/
                |_|
+```
 
 ## Install
 
