@@ -1,7 +1,7 @@
 # vasputils
 
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
-[![Build Status](https://travis-ci.com/KeisukeYamashita/vasp-utils.svg?branch=master)](https://travis-ci.com/KeisukeYamashita/vasp-utils)
+[![Build Status](https://travis-ci.com/KeisukeYamashita/vasputils.svg?branch=master)](https://travis-ci.com/KeisukeYamashita/vasputils)
 [![Version](https://img.shields.io/badge/version-v0.0.1-red.svg)](https://img.shields.io/badge/version-v0.0.1-red.svg)
 
 > A useful VASP tools to help your research accelerate
