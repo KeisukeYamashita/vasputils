@@ -22,4 +22,4 @@ cargo install KeisukeYamashita/vasputils
 
 ## License
 
-`vasp-utils` is licensed under the MIT license. Please read the LICENSE file in this repository for more information.
+`vasputils` is licensed under the MIT license. Please read the LICENSE file in this repository for more information.
