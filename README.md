@@ -43,7 +43,8 @@ We use emoji to show supports.
 
 ### OUTCAR
 
-✅ grep
+✅ grep for plain text
+✅ grep for csv
 
 ## License
 
