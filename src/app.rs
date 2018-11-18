@@ -39,14 +39,18 @@ fn main() {
         .get_matches();
 
     if let Some(matches) = matches.subcommand_matches("format") { 
-
         // Option `.required(true)` promises that input has a value
         let input_path_str = matches.value_of("input").unwrap();
         let output_path_str = matches.value_of("output");
 
         let (input_path, output_path) = utils::get_file_paths(input_path_str, output_path_str);
 
-        let mut file = match File::open(input_path) {
+        let formatter = format::Formatter::new(
+            input_path, 
+            output_path,
+        );
+
+        let mut file = match File::open(formatter.input) {
           Err(why) => panic!("couldn`t find :{}", why.description()),
           Ok(file) => file,
         };
@@ -59,7 +63,7 @@ fn main() {
           }
         }
 
-        let mut output_file_path = match File::create(output_path) {
+        let mut output_file_path = match File::create(formatter.output) {
           Err(why) => panic!("couldn`t find : {}", why.description()),
           Ok(file) => file,
         };
