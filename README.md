@@ -14,10 +14,17 @@ cargo install KeisukeYamashita/vasputils
 ```
 
 ## Support
- 
+
+We use emoji to show supports.
+
+| emoji | meaning |
+|:----:|:----:|
+| ✅ | supported |
+| 🚧 | working |
+
 ### OUTCAR
 
-- [ ] Get free energy of integration from OUTCAR
+✅ Just grep
 
 
 ## License
