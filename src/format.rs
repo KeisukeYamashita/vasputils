@@ -1,4 +1,3 @@
-use std::any::Any;
 use std::error::Error;
 use std::fs::File;
 use std::io::{BufRead, BufReader, BufWriter, Write};
@@ -113,6 +112,7 @@ impl<'a> Formatter<'a> {
     }
 
     /// `is_validate_input` checks wether the input file exists.
+    #[allow(dead_code)]
     fn is_validate_input(&self) -> bool {
         return match File::open(self.input) {
             Err(_) => false,
