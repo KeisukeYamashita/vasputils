@@ -8,7 +8,7 @@ description = "A useful VASP tools to help your research accelerate"
 license = "MIT"
 
 [[bin]]
-name = "bin"
+name = "vasputils"
 path = "src/app.rs"
 
 [dependencies]
