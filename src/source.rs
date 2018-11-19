@@ -1,4 +1,7 @@
+use std::error::Error;
 use std::path::Path;
+use std::fs::File;
+use std::io::{BufWriter, Write};
 use std::str::FromStr;
 
 /// `Source` is a struct for interracting with external sources such as [Materials Project](https://materialsproject.org/).
@@ -11,10 +14,24 @@ pub struct Source<'a>{
 
 impl<'a> Source<'a> {
      /// `new()` initializes the `Source` struct with user input.
+     // TODO: Not using target input now. 
     pub fn new(target: &str) -> Self {
         Source {
             target_path: Path::new("~/vasputils/mp")
         }
+    }
+
+    /// `initialize_token` actually writes token into `~/vasputils/[TARGET_SOURCE]`.
+    /// This token will be used for interacting with external source.
+    pub fn initialize_token(&self, token: &str) {
+        let file = match File::open(self.target_path) {
+            Err(why) => panic!("couldn`t find :{}", why.description()),
+            Ok(file) => file,
+        };
+
+        let mut writer = BufWriter::new(file);
+
+        writer.write(token.as_bytes()).unwrap();
     }
 }
 

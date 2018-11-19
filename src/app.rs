@@ -99,6 +99,7 @@ fn main() {
             let target = sub_matches.value_of("target").unwrap();
 
             let source = Source::new(target);
+            source.initialize_token(token);
         }
     }
 }
