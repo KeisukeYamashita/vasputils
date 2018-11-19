@@ -1,6 +1,6 @@
 [package]
 name = "vasputils"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["KeisukeYamashita <19yamashita15@gmail.com>"]
 categories = ["command-line-utilities"]
 homepage = "https://github.com/KeisukeYamashita/vasputils"
