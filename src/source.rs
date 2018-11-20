@@ -1,22 +1,25 @@
 extern crate reqwest;
 extern crate dirs;
+extern crate serde;
+extern crate serde_json;
 
 use std::error::Error;
 use std::path::{PathBuf};
 use std::fs::File;
 use std::io::{BufWriter, Write, BufReader, Read};
 use std::str::FromStr;
+use self::serde_json::{Value};
 
 /// `Source` is a struct for interracting with external sources such as [Materials Project](https://materialsproject.org/).
 /// 
 /// It is used to get sources such as POSCAR, and other informations using hyper, a HTTP client for rust.
+#[derive(Serialize, Deserialize, Debug)] 
 pub struct Source{
     target_path: PathBuf
 }
 
 impl Source{
      /// `new()` initializes the `Source` struct with user input.
-     // TODO: Not using target input now. 
     pub fn new(target: &str) -> Self {
         let mut path = dirs::home_dir().unwrap();
         path.push("vasputils");
@@ -57,7 +60,12 @@ impl Source{
             Err(why) => panic!("error while requesting to the API, err: {}", why.description())
         };
 
-        println!("{:?}", body)
+        let v: Value = match serde_json::from_str(body.as_str()) {
+            Ok(v) => v,
+            Err(why) => panic!("error while parsing, err: {}", why.description())
+        };
+
+        println!("{:?}", v);
     }
 }
 
