@@ -72,6 +72,19 @@ fn main() {
                                 .required(true)
                         )
                 )
+                .subcommand(
+                    SubCommand::with_name("fetch")
+                        .about("fetch files from external source specified by the target option")
+                        .arg(
+                            Arg::with_name("target")
+                                .help("target of your external source")
+                                .short("t")
+                                .long("target")
+                                .possible_values(&["MaterialProjects", "mp"])
+                                .takes_value(true)
+                                .required(true)
+                        )
+                )
         )
         .get_matches();
 
@@ -100,6 +113,13 @@ fn main() {
 
             let source = Source::new(target);
             source.initialize_token(token);
+        }
+
+        if let Some(sub_matches) = matches.subcommand_matches("fetch"){
+            let target = sub_matches.value_of("target").unwrap();
+
+            let source = Source::new(target);
+            source.fetch_file();
         }
     }
 }

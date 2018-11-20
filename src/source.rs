@@ -1,7 +1,7 @@
 use std::error::Error;
 use std::path::{PathBuf};
 use std::fs::File;
-use std::io::{BufWriter, Write};
+use std::io::{BufWriter, Write, BufReader, Read};
 use std::str::FromStr;
 use std::env;
 
@@ -9,10 +9,10 @@ use std::env;
 /// 
 /// It is used to get sources such as POSCAR, and other informations using hyper, a HTTP client for rust.
 pub struct Source{
-    target_path: PathBuf,
+    target_path: PathBuf
 }
 
-impl Source {
+impl Source{
      /// `new()` initializes the `Source` struct with user input.
      // TODO: Not using target input now. 
     pub fn new(target: &str) -> Self {
@@ -36,6 +36,19 @@ impl Source {
         let mut writer = BufWriter::new(file);
 
         writer.write(token.as_bytes()).unwrap();
+    }
+
+    pub fn fetch_file(self){
+        let file = match File::open(&self.target_path) {
+            Ok(file) => file,
+            Err(why) => panic!("cannot open {:?}, err: {}", self.target_path, why.description())
+        };
+
+        let ref mut buffer = String::new();
+        let mut reader = BufReader::new(file);
+        reader.read_to_string(buffer).unwrap();
+        
+        
     }
 }
 
