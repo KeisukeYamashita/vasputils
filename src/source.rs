@@ -1,22 +1,24 @@
+extern crate reqwest;
+extern crate dirs;
+
 use std::error::Error;
 use std::path::{PathBuf};
 use std::fs::File;
-use std::io::{BufWriter, Write};
+use std::io::{BufWriter, Write, BufReader, Read};
 use std::str::FromStr;
-use std::env;
 
 /// `Source` is a struct for interracting with external sources such as [Materials Project](https://materialsproject.org/).
 /// 
 /// It is used to get sources such as POSCAR, and other informations using hyper, a HTTP client for rust.
 pub struct Source{
-    target_path: PathBuf,
+    target_path: PathBuf
 }
 
-impl Source {
+impl Source{
      /// `new()` initializes the `Source` struct with user input.
      // TODO: Not using target input now. 
     pub fn new(target: &str) -> Self {
-        let mut path = env::home_dir().unwrap();
+        let mut path = dirs::home_dir().unwrap();
         path.push("vasputils");
         path.push(target);
 
@@ -36,6 +38,26 @@ impl Source {
         let mut writer = BufWriter::new(file);
 
         writer.write(token.as_bytes()).unwrap();
+    }
+
+    /// `fetch_file()` method strout responce from external resource.
+    pub fn fetch_file(self, material: &str){
+        let file = match File::open(&self.target_path) {
+            Ok(file) => file,
+            Err(why) => panic!("cannot open {:?}, err: {}", self.target_path, why.description())
+        };
+
+        let ref mut token = String::new();
+        let mut reader = BufReader::new(file);
+        reader.read_to_string(token).unwrap();
+        
+        let url: String = "https://www.materialsproject.org/rest/v2/materials/".to_string() + "/" + material + "/vasp" + "?API_KEY=" + token; 
+        let body = match reqwest::get(url.as_str()) {
+            Ok(mut req) => req.text().unwrap(),
+            Err(why) => panic!("error while requesting to the API, err: {}", why.description())
+        };
+
+        println!("{:?}", body)
     }
 }
 

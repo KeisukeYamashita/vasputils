@@ -13,3 +13,5 @@ path = "src/app.rs"
 
 [dependencies]
 clap = "2"
+reqwest = "*"
+dirs = "1.0"
