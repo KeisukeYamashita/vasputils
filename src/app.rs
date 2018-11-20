@@ -84,6 +84,12 @@ fn main() {
                                 .takes_value(true)
                                 .required(true)
                         )
+                        .arg(
+                            Arg::with_name("material")
+                                .help("the material you want to fetch")
+                                .takes_value(true)
+                                .required(true)
+                        )
                 )
         )
         .get_matches();
@@ -117,9 +123,10 @@ fn main() {
 
         if let Some(sub_matches) = matches.subcommand_matches("fetch"){
             let target = sub_matches.value_of("target").unwrap();
+            let material = sub_matches.value_of("material").unwrap();
 
             let source = Source::new(target);
-            source.fetch_file();
+            source.fetch_file(material);
         }
     }
 }
