@@ -48,7 +48,8 @@ We use emoji to show supports.
 
 ### External Source
 
-- ✅ init with token
+- ✅ init with token for MaterialsProject
+- ✅ Use API with token
 
 ## License
 
